@@ -10,7 +10,13 @@ _export:
   aa:
     x: xxx
   b: bbb
+  bb:
+    y:
+      z: zzz
   c: ccc
+  cc:
+    compound: ${a}-${b}
+  ccc: ${cc.compound}-${c}
 
 +a:
   _export:
@@ -21,6 +27,12 @@ _export:
       e: ${d}
       f:
         g: ${d}
+      h: hhh
+      i:
+        j: ${h}
+      k: ${h}
+      l:
+        m: ${k}
     +c:
       echo>: ${d}
     +d:
@@ -29,6 +41,18 @@ _export:
       echo>: ${f.g}
     +aa:
       echo>: ${aa.x}
+    +bb:
+      echo>: ${bb.y.z}
+    +cc:
+      echo>: ${cc.compound}
+    +ccc:
+      echo>: ${ccc}
+    +i:
+      echo>: ${i.j}
+    +k:
+      echo>: ${k}
+    +m:
+      echo>: ${l.m}
 
 +task:
   _export: 
