@@ -12,6 +12,8 @@ _export:
     arg: "export param"
   +mytask:
     py>: tasks.MyWorkflow.my_task
+  +mysecondtask:
+    py>: tasks.MyWorkflow.my_second_task
 
 # +disp_current_date:
 #   echo>: ${moment(session_time).utc().format('YYYY-MM-DD HH:mm:ss Z')}
