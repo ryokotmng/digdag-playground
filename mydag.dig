@@ -6,6 +6,29 @@ timezone: UTC
 _export:
   docker:
     image: python:3.11.4
+  a: aaa
+  aa:
+    x: xxx
+  b: bbb
+  c: ccc
+
++a:
+  _export:
+    d: ${a}-${b}-${c}
+
+  +b:
+    _export:
+      e: ${d}
+      f:
+        g: ${d}
+    +c:
+      echo>: ${d}
+    +d:
+      echo>: ${e}
+    +e:
+      echo>: ${f.g}
+    +aa:
+      echo>: ${aa.x}
 
 +task:
   _export: 
