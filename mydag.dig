@@ -60,8 +60,10 @@ _export:
   +mytask:
     py>: tasks.MyWorkflow.my_task
   +mysecondtask:
+    _export:
+      my_task: ${my_task}
     py>: tasks.MyWorkflow.my_second_task
-    my_task: ${my_task} # これは展開される
+    # my_task: ${my_task} # これは展開される
 
 # +disp_current_date:
 #   echo>: ${moment(session_time).utc().format('YYYY-MM-DD HH:mm:ss Z')}
