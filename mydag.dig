@@ -38,7 +38,7 @@ _export:
     +d:
       echo>: ${e}
     +e:
-      echo>: ${f.g}
+      echo>: 展開されない→ ${f.g}
     +aa:
       echo>: ${aa.x}
     +bb:
@@ -52,7 +52,7 @@ _export:
     +k:
       echo>: ${k}
     +m:
-      echo>: ${l.m}
+      echo>: 展開されない→ ${l.m}
 
 +task:
   _export: 
@@ -60,7 +60,7 @@ _export:
   +mytask:
     py>: tasks.MyWorkflow.my_task
   +mysecondtask:
-    _export:
+    _export: # これを指定するとmy_taskが展開しなくなる
       my_task: ${my_task}
     py>: tasks.MyWorkflow.my_second_task
     # my_task: ${my_task} # これは展開される
