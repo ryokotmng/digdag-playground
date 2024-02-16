@@ -33,32 +33,37 @@ _export:
       k: ${h}
       l:
         m: ${k}
-    +c:
-      echo>: ${d}
-    +d:
-      echo>: ${e}
+    # +c:
+    #   echo>: ${d}
+    # +d:
+    #   echo>: ${e}
     +e:
       echo>: 展開されない→ ${f.g}
-    +aa:
-      echo>: ${aa.x}
-    +bb:
-      echo>: ${bb.y.z}
-    +cc:
-      echo>: ${cc.compound}
-    +ccc:
-      echo>: ${ccc}
+    # +aa:
+    #   echo>: ${aa.x}
+    # +bb:
+    #   echo>: ${bb.y.z}
+    # +cc:
+    #   echo>: ${cc.compound}
+    # +ccc:
+    #   echo>: ${ccc}
     +i:
       echo>: ${i.j}
-    +k:
-      echo>: ${k}
+    # +k:
+    #   echo>: ${k}
     +m:
       echo>: 展開されない→ ${l.m}
 
 +task:
   _export: 
     arg: "export param"
+    arg2:
+      c: ${ccc}
   +mytask:
+    # _export: # これも展開されない
+    #   nested: ${arg2.c}
     py>: tasks.MyWorkflow.my_task
+    nested: ${arg2.c} # これは展開されない
   +mysecondtask:
     _export: # これを指定するとmy_taskが展開しなくなる
       my_task: ${my_task}
@@ -76,6 +81,6 @@ _export:
 #     echo>: ${order} ${animal}
 #   _parallel: true
 
-+teardown:
-  echo>: finish ${session_time}
+# +teardown:
+#   echo>: finish ${session_time}
 
