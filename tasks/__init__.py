@@ -6,6 +6,7 @@ class MyWorkflow(object):
         print(arg)
         print("nested: "+nested)
         digdag.env.store({'my_task': arg})
+        digdag.env.store({'expand': arg})
         digdag.env.store({'arg': arg})
 
     def my_second_task(self, my_task, arg, arg2):
