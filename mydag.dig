@@ -68,6 +68,7 @@ _export:
     _export: # これを指定するとmy_taskが展開しなくなる
       my_task: ${my_task}
     py>: tasks.MyWorkflow.my_second_task
+    arg: ${arg} # これは展開される
     # my_task: ${my_task} # これは展開される
 
 # +disp_current_date:
