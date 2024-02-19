@@ -7,12 +7,12 @@ _export:
   docker:
     image: python:3.11.4
   a: aaa
-  aa:
-    x: xxx
+  # aa:
+  #   x: xxx
   b: bbb
-  bb:
-    y:
-      z: zzz
+  # bb:
+  #   y:
+  #     z: zzz
   c: ccc
   cc:
     compound: ${a}-${b}
@@ -24,7 +24,7 @@ _export:
 
   +b:
     _export:
-      e: ${d}
+      e: ${d}-${a}
       f:
         g: ${d}
       h: hhh
@@ -35,8 +35,8 @@ _export:
         m: ${k}
     # +c:
     #   echo>: ${d}
-    # +d:
-    #   echo>: ${e}
+    +d:
+      echo>: ${e}
     +e:
       echo>: 展開されない→ ${f.g}
     # +aa:
