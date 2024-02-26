@@ -22,23 +22,23 @@ _export:
   _export:
     d: ${a}-${b}-${c}
 
-  +b:
-    _export:
-      e: ${d}-${a}
-      f:
-        g: ${d}
-      h: hhh
-      i:
-        j: ${h}
-      k: ${h}
-      l:
-        m: ${k}
+  # +b:
+    # _export:
+    #   e: ${d}-${a}
+    #   f:
+    #     g: ${d}
+    #   h: hhh
+    #   i:
+    #     j: ${h}
+    #   k: ${h}
+    #   l:
+    #     m: ${k}
     # +c:
     #   echo>: ${d}
-    +d:
-      echo>: ${e}
-    +e:
-      echo>: 展開されない→ ${f.g}
+    # +d:
+    #   echo>: ${e}
+    # +e:
+    #   echo>: 展開されない→ ${f.g}
     # +aa:
     #   echo>: ${aa.x}
     # +bb:
@@ -47,12 +47,12 @@ _export:
     #   echo>: ${cc.compound}
     # +ccc:
     #   echo>: ${ccc}
-    +i:
-      echo>: ${i.j}
+    # +i:
+    #   echo>: ${i.j}
     # +k:
     #   echo>: ${k}
-    +m:
-      echo>: 展開されない→ ${l.m}
+    # +m:
+    #   echo>: 展開されない→ ${l.m}
 
 +task:
   _export: 
@@ -60,16 +60,15 @@ _export:
     arg2:
       c: ${ccc}
   +mytask:
-    # _export: # これも展開されない
-    #   nested: ${arg2.c}
+    _export:
+      who: ya
+      nested: ${arg2.c} # 展開された
     py>: tasks.MyWorkflow.my_task
-    nested: ${arg2.c} # これは展開されない
   +mysecondtask:
     _export: # これを指定するとmy_taskが展開しなくなる
       my_task: ${my_task}
     py>: tasks.MyWorkflow.my_second_task
     arg: ${arg} # これは展開される
-    expand: ${expand} # これは展開される
 
 # +disp_current_date:
 #   echo>: ${moment(session_time).utc().format('YYYY-MM-DD HH:mm:ss Z')}
