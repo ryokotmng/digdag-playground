@@ -1,9 +1,22 @@
 timezone: UTC
 
++setup:
+  echo>: start ${session_time}
+
 _export:
+  docker:
+    image: python:3.11.4
   a: aaa
+  # aa:
+  #   x: xxx
   b: bbb
+  # bb:
+  #   y:
+  #     z: zzz
   c: ccc
+  cc:
+    compound: ${a}-${b}
+  ccc: ${cc.compound}-${c}
 
 +a:
   _export:
@@ -11,12 +24,64 @@ _export:
 
   +b:
     _export:
-      e: ${d}
+      e: ${d}-${a}
       f:
         g: ${d}
-    +c:
-      echo>: ${d}
+      h: hhh
+      i:
+        j: ${h}
+      k: ${h}
+      l:
+        m: ${k}
+    # +c:
+    #   echo>: ${d}
     +d:
       echo>: ${e}
     +e:
-      echo>: ${f.g}
+      echo>: 展開されない→ ${f.g}
+    # +aa:
+    #   echo>: ${aa.x}
+    # +bb:
+    #   echo>: ${bb.y.z}
+    # +cc:
+    #   echo>: ${cc.compound}
+    # +ccc:
+    #   echo>: ${ccc}
+    +i:
+      echo>: ${i.j}
+    # +k:
+    #   echo>: ${k}
+    +m:
+      echo>: 展開されない→ ${l.m}
+
++task:
+  _export: 
+    arg: "export param"
+    arg2:
+      c: ${ccc}
+  +mytask:
+    # _export: # これも展開されない
+    #   nested: ${arg2.c}
+    py>: tasks.MyWorkflow.my_task
+    nested: ${arg2.c} # これは展開されない
+  +mysecondtask:
+    _export: # これを指定するとmy_taskが展開しなくなる
+      my_task: ${my_task}
+    py>: tasks.MyWorkflow.my_second_task
+    arg: ${arg} # これは展開される
+    expand: ${expand} # これは展開される
+
+# +disp_current_date:
+#   echo>: ${moment(session_time).utc().format('YYYY-MM-DD HH:mm:ss Z')}
+# 
+# +repeat:
+#   for_each>:
+#     order: [first, second, third]
+#     animal: [dog, cat]
+#   _do:
+#     echo>: ${order} ${animal}
+#   _parallel: true
+
+# +teardown:
+#   echo>: finish ${session_time}
+
